@@ -25,6 +25,7 @@ function Default(): React.ReactElement {
     <ScrollContainer>
       <Container>
         <Checkbox/>
+        <Checkbox disabled = {true}/>
       </Container>
     </ScrollContainer>
   );

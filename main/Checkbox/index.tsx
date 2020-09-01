@@ -70,31 +70,31 @@ const Checkbox: FC<Props> = ({
   labelColor = '#000000',
   defaultChecked = false,
   onStateChange = ():void => {},
-  /* TODO  */
-  // disabled = false,
+  disabled = false,
 }) => {
   const [isChecked, setIstChecked] = useState<boolean>(defaultChecked);
   const onPress = useCallback(() => {
     setIstChecked((prevIsChecked) => !prevIsChecked);
     onStateChange();
   }, [onStateChange]);
+
+  const isDisabled = disabled;
+
   return (
     <TouchableHighlight
       onPress={onPress}
       underlayColor="transparent"
-      style={{ marginVertical: 20 }}>
+      style={{ marginVertical: 20 }}
+      disabled={isDisabled}>
       <Container>
-        <MarkerContainer
-          boxSize={boxSize}
-          boxColor={boxColor}
-        >
+        <MarkerContainer boxSize={boxSize} boxColor={isDisabled?'#E0E0E0':boxColor}>
           <Marker isChecked={isChecked}>
             {isChecked && <MarkerImg
               source={require('../__assets__/check_tick.png')}
             />}
           </Marker>
         </MarkerContainer>
-        <Label labelSize={labelSize} labelColor={labelColor}>
+        <Label labelSize={labelSize} labelColor={isDisabled?'#E0E0E0':labelColor}>
           {labelText}
         </Label>
       </Container>
