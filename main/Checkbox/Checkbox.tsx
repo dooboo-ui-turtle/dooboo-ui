@@ -139,7 +139,6 @@ const COLOR: {
 const Container = styled.View<ContainerProps>`
   flex-direction: ${({ labelLeft }): string => labelLeft ? 'row-reverse' : 'row'};
   justify-content: center;
-  align-items: center;
 `;
 
 const MarkerContainer = styled.View<MarkerContainerProps>`
