@@ -10,8 +10,8 @@ const ScrollContainer = styled.ScrollView`
 
 const Container = styled.View`
   background-color: transparent;
-  align-items: center;
-  justify-content: center;
+  /*align-items: center;*/
+  /*justify-content: center;*/
   width: 100%;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -61,7 +61,6 @@ function DefaultCheckboxGroup(): React.ReactElement {
     { label: 'Apple', value: 'Apple' },
     { label: 'Pear', value: 'Pear' },
     { label: 'Orange', value: 'Orange' },
-    { label: 'Mango', value: 'Mango' },
   ];
   const optionsWithDisabled = [
     { label: 'Apple', value: 'Apple' },
@@ -78,8 +77,7 @@ function DefaultCheckboxGroup(): React.ReactElement {
       <Container>
         <Title>plainOption</Title>
         <CheckboxGroup options={plainOptions} onChange={onChange} />
-      </Container>
-      <Container>
+
         <Title>Default</Title>
         <CheckboxGroup options={options} onChange={onChange} />
       </Container>
@@ -90,6 +88,9 @@ function DefaultCheckboxGroup(): React.ReactElement {
       <Container>
         <Title>with disabled props</Title>
         <CheckboxGroup options={options} disabled onChange={onChange} />
+
+        <Title>with direction row</Title>
+        <CheckboxGroup direction={'row'} options={options} onChange={onChange} />
       </Container>
     </ScrollContainer>
   );
@@ -125,7 +126,6 @@ function CheckAllExample(): React.ReactElement {
           onChange={onCheckAllChange}
           checked={checkAll}
         />
-        <Seperator/>
         <CheckboxGroup values={checkedList} options={plainOptions} onChange={onChange} />
       </Container>
     </ScrollContainer>
@@ -148,7 +148,6 @@ export const ReactElement_ = (): ReactElement => <CheckAllExample/>;
  * Below are stories for app
  */
 storiesOf('Checkbox', module)
-  .addDecorator(ContainerDeco)
   .add('Checkbox', () => (
     <>
       <DefaultCheckbox />
