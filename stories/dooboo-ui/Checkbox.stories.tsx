@@ -82,8 +82,12 @@ function DefaultCheckboxGroup(): React.ReactElement {
 
         <Divider />
 
-        <Title>Default</Title>
-        <CheckboxGroup options={options} onChange={onChange} />
+        <Title>default with Row</Title>
+        <CheckboxGroup
+          direction={'row'}
+          options={options}
+          onChange={onChange}
+        />
 
         <Divider />
 
@@ -96,13 +100,6 @@ function DefaultCheckboxGroup(): React.ReactElement {
         <CheckboxGroup options={options} disabled onChange={onChange} />
 
         <Divider />
-
-        <Title>with direction row</Title>
-        <CheckboxGroup
-          direction={'row'}
-          options={options}
-          onChange={onChange}
-        />
       </Container>
     </ScrollContainer>
   );
