@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { GroupCheckboxContext } from './CheckboxGroup';
 import { TouchableHighlight } from 'react-native';
 import styled from 'styled-components/native';
@@ -20,10 +27,10 @@ export interface CheckboxProps {
   id?: string;
   label: string | number;
   value?: string | number | boolean;
-  checked?: boolean
+  checked?: boolean;
   defaultChecked?: boolean;
   indeterminate?: boolean;
-  disabled?: boolean
+  disabled?: boolean;
   onChange?: (event: OnChangeEvent) => void;
   customStyle?: CustomStyle;
 }
@@ -37,7 +44,6 @@ const Checkbox: FC<CheckboxProps> = ({
   disabled = false,
   onChange,
   customStyle,
-
 }) => {
   const groupCheckboxContext = useContext(GroupCheckboxContext);
   const isMounted = useRef(false);
@@ -73,43 +79,51 @@ const Checkbox: FC<CheckboxProps> = ({
     <TouchableHighlight
       onPress={handleChange}
       underlayColor="transparent"
-      style={{ marginHorizontal: 20, paddingBottom: 20 }}
+      style={{ margin: 10 }}
       disabled={disabled}>
-      <Container labelLeft={customStyle?.labelLeft}>
+      <Container>
+        {customStyle?.labelLeft && (
+          <Label
+            labelColor={labelColor}
+            labelSize={customStyle?.labelSize}
+            labelLeft={customStyle?.labelLeft}>
+            {label}
+          </Label>
+        )}
         <MarkerContainer
           boxSize={customStyle?.boxSize}
-          boxColor={disabled ? COLOR.LIGHTGRAY : customStyle?.boxColor}
-        >
+          boxColor={disabled ? COLOR.LIGHTGRAY : customStyle?.boxColor}>
           <Marker isChecked={isChecked}>
-            {!indeterminate && isChecked && <MarkerImg
-              source={{ uri: checkboxImg }}
-            />}
-            {
-              indeterminate && <Markerindeterminate
+            {!indeterminate && isChecked && (
+              <MarkerImg source={{ uri: checkboxImg }} />
+            )}
+            {indeterminate && (
+              <Markerindeterminate
                 boxColor={disabled ? COLOR.LIGHTGRAY : customStyle?.boxColor}
               />
-            }
+            )}
           </Marker>
         </MarkerContainer>
-        <Label
-          labelColor={labelColor}
-          labelSize={customStyle?.labelSize}
-          labelLeft={customStyle?.labelLeft}
-        >
-          {label}
-        </Label>
+        {!customStyle?.labelLeft && (
+          <Label
+            labelColor={labelColor}
+            labelSize={customStyle?.labelSize}
+            labelLeft={customStyle?.labelLeft}>
+            {label}
+          </Label>
+        )}
       </Container>
     </TouchableHighlight>
   );
 };
 
-interface ContainerProps {
-  labelLeft?: boolean;
-}
+// interface ContainerProps {
+//  labelLeft?: boolean;
+// }
 
 interface MarkerContainerProps {
-  boxSize?: number
-  boxColor?: string
+  boxSize?: number;
+  boxColor?: string;
 }
 
 interface LabelProps {
@@ -120,11 +134,11 @@ interface LabelProps {
 }
 
 interface MarkerProps {
-  isChecked: boolean
+  isChecked: boolean;
 }
 
 interface MarkerindeterminateProps {
-  boxColor?: string
+  boxColor?: string;
 }
 
 const COLOR: {
@@ -136,15 +150,16 @@ const COLOR: {
   BLACK: '#000000',
 };
 
-const Container = styled.View<ContainerProps>`
-  flex-direction: ${({ labelLeft }): string => labelLeft ? 'row-reverse' : 'row'};
-  justify-content: center;
+const Container = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 `;
 
 const MarkerContainer = styled.View<MarkerContainerProps>`
   padding: 1.5px;
-  width: ${({ boxSize }):number => boxSize || 20}px;
-  height: ${({ boxSize }):number => boxSize || 20}px;
+  width: ${({ boxSize }): number => boxSize || 20}px;
+  height: ${({ boxSize }): number => boxSize || 20}px;
   background-color: ${({ boxColor }): string => boxColor || COLOR.BLUE_SKY};
 `;
 
@@ -152,7 +167,8 @@ const Marker = styled.View<MarkerProps>`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${({ isChecked }): string => isChecked ? 'transparent' : '#ffffff'};
+  background-color: ${({ isChecked }): string =>
+    isChecked ? 'transparent' : '#ffffff'};
 `;
 
 const MarkerImg = styled.Image`
@@ -170,8 +186,8 @@ const Markerindeterminate = styled.View<MarkerindeterminateProps>`
 
 const Label = styled.Text<LabelProps>`
   font-size: 20px;
-  padding-left:  ${({ labelLeft }): number => labelLeft ? 0 : 10}px;
-  padding-right: ${({ labelLeft }): number => labelLeft ? 10 : 0}px;
+  padding-left: ${({ labelLeft }): number => (labelLeft ? 0 : 10)}px;
+  padding-right: ${({ labelLeft }): number => (labelLeft ? 10 : 0)}px;
   color: ${({ labelColor }): string => labelColor || COLOR.BLACK};
 `;
 

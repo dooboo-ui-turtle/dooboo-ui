@@ -1,6 +1,5 @@
 import { Checkbox, CheckboxGroup } from '../../main';
 import React, { ReactElement, useState } from 'react';
-import { ContainerDeco } from '../../storybook/decorators';
 import { storiesOf } from '@storybook/react-native';
 import styled from 'styled-components/native';
 
@@ -10,23 +9,23 @@ const ScrollContainer = styled.ScrollView`
 
 const Container = styled.View`
   background-color: transparent;
-  /*align-items: center;*/
-  /*justify-content: center;*/
-  width: 100%;
+  justify-content: center;
   margin-top: 20px;
   margin-bottom: 20px;
-  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 
 const Title = styled.Text`
-  padding: 20px;
-  font-size: 20px;
+  padding: 10px;
+  font-size: 22px;
   font-weight: bold;
 `;
 
-const Seperator = styled.View`
-  border-bottom-color: black;
-  border-bottom-width: 1px;
+const Divider = styled.View`
+  display: flex;
+  margin: 10px;
+  border: 0.5px solid lightgray;
 `;
 
 function DefaultCheckbox(): React.ReactElement {
@@ -37,17 +36,20 @@ function DefaultCheckbox(): React.ReactElement {
     <ScrollContainer>
       <Container>
         <Title>default</Title>
-        <Checkbox label="defaultChecked" defaultChecked ></Checkbox>
-      </Container>
-      <Container>
+        <Checkbox label="defaultChecked" defaultChecked></Checkbox>
+
+        <Divider />
+
         <Title>disabled</Title>
         <Checkbox label="disabled" disabled />
-      </Container>
-      <Container>
+
+        <Divider />
+
         <Title>indeterminate</Title>
         <Checkbox label="indeterminate" indeterminate />
-      </Container>
-      <Container>
+
+        <Divider />
+
         <Title>labelLeft</Title>
         <Checkbox label="labelLeft" customStyle={customStyle} />
       </Container>
@@ -78,19 +80,29 @@ function DefaultCheckboxGroup(): React.ReactElement {
         <Title>plainOption</Title>
         <CheckboxGroup options={plainOptions} onChange={onChange} />
 
+        <Divider />
+
         <Title>Default</Title>
         <CheckboxGroup options={options} onChange={onChange} />
-      </Container>
-      <Container>
+
+        <Divider />
+
         <Title>option with disabled</Title>
         <CheckboxGroup options={optionsWithDisabled} onChange={onChange} />
-      </Container>
-      <Container>
+
+        <Divider />
+
         <Title>with disabled props</Title>
         <CheckboxGroup options={options} disabled onChange={onChange} />
 
+        <Divider />
+
         <Title>with direction row</Title>
-        <CheckboxGroup direction={'row'} options={options} onChange={onChange} />
+        <CheckboxGroup
+          direction={'row'}
+          options={options}
+          onChange={onChange}
+        />
       </Container>
     </ScrollContainer>
   );
@@ -101,16 +113,20 @@ function CheckAllExample(): React.ReactElement {
   const defaultCheckedList = ['Apple', 'Orange'];
 
   const [checkedList, setCheckedList] = useState(defaultCheckedList);
-  const [indeterminate, setIndeterminate] = useState(defaultCheckedList.length > 0);
+  const [indeterminate, setIndeterminate] = useState(
+    defaultCheckedList.length > 0,
+  );
   const [checkAll, setCheckAll] = useState(false);
 
   const onChange = (checkedList): void => {
     setCheckedList(checkedList);
-    setIndeterminate(!!checkedList.length && checkedList.length < plainOptions.length);
+    setIndeterminate(
+      !!checkedList.length && checkedList.length < plainOptions.length,
+    );
     setCheckAll(checkedList.length === plainOptions.length);
   };
 
-  const onCheckAllChange = (e) : void => {
+  const onCheckAllChange = (e): void => {
     setCheckedList(e.checked ? plainOptions : []);
     setIndeterminate(false);
     setCheckAll(e.checked);
@@ -126,7 +142,13 @@ function CheckAllExample(): React.ReactElement {
           onChange={onCheckAllChange}
           checked={checkAll}
         />
-        <CheckboxGroup values={checkedList} options={plainOptions} onChange={onChange} />
+        <Divider />
+        <CheckboxGroup
+          direction="row"
+          values={checkedList}
+          options={plainOptions}
+          onChange={onChange}
+        />
       </Container>
     </ScrollContainer>
   );
@@ -141,8 +163,10 @@ export default {
  */
 
 export const DefaultCheckbox_ = (): ReactElement => <DefaultCheckbox />;
-export const DefaultCheckboxGroup_ = (): ReactElement => <DefaultCheckboxGroup/>;
-export const ReactElement_ = (): ReactElement => <CheckAllExample/>;
+export const DefaultCheckboxGroup_ = (): ReactElement => (
+  <DefaultCheckboxGroup />
+);
+export const ReactElement_ = (): ReactElement => <CheckAllExample />;
 
 /**
  * Below are stories for app
